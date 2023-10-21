@@ -64,9 +64,10 @@ public class HardwareMap_Inspire {
     public DcMotor Intake = null;
 
     public DcMotor intake = null;
-    public Servo left_claw = null;
-    public Servo right_claw = null;
-    public Servo flipper = null;
+     public DcMotor Outtake = null;
+
+    public Servo Drone = null;
+
 
     /* local OpMode members. */
     HardwareMap hwMap = null;
@@ -87,10 +88,9 @@ public class HardwareMap_Inspire {
         rightFront = hwMap.get(DcMotor.class, "frontRight");
         rightBack = hwMap.get(DcMotor.class, "backRight");
         Intake = hwMap.get(DcMotor.class, "Intake");
-        extension = hwMap.get(DcMotor.class, "extension");
-        flipper = hwMap.get(Servo.class, "flipper");
-        right_claw = hwMap.get(Servo.class, "rightClaw");
-        left_claw = hwMap.get(Servo.class, "leftClaw");
+        Outtake = hwMap.get(DcMotor.class, "Outtake");
+        Drone = hwMap.get(Servo.class, "Drone");
+
 
        /*
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
