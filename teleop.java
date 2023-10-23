@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /* Copyright (c) 2017 FIRST. All rights reserved.
@@ -38,26 +40,37 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class teleop extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    public static DcMotor frontLeft;
-    public static DcMotor frontRight;
-    public static DcMotor backLeft;
-    public static DcMotor backRight;
-
-    public static DcMotor Intake;
+    public DcMotor leftFront = null;
+    public DcMotor leftBack = null;
+    public DcMotor rightFront = null;
+    public DcMotor rightBack = null;
+    public DcMotor Intake = null;
+    public DcMotor outtake_extension = null;
+    public Servo Drone = null;
+    public Servo left_bucket = null;
+    public Servo right_bucket = null;
+    public Servo outtake_wheel = null;
 
     public static final double STRAFE_SPEED = 1;
 
 
     public void init() {
 
-        frontLeft = hardwareMap.dcMotor.get("frontLeft");
-        backLeft = hardwareMap.dcMotor.get("backLeft");
-        frontRight = hardwareMap.dcMotor.get("frontRight");
-        backRight = hardwareMap.dcMotor.get("backRight");
+        leftFront = hardwareMap.dcMotor.get("leftFront");
+        leftBack = hardwareMap.dcMotor.get("leftBack");
+        rightFront = hardwareMap.dcMotor.get("rightFront");
+        rightBack = hardwareMap.dcMotor.get("rightBack");
         Intake = hardwareMap.dcMotor.get("Intake");
+        outtake_extension = hardwareMap.dcMotor.get("Outtake");
+        Drone = hardwareMap.servo.get("Drone");
+        left_bucket = hardwareMap.servo.get("left_bucket");
+        right_bucket = hardwareMap.servo.get("right_bucket");
+        outtake_wheel = hardwareMap.servo.get("outtake_wheel");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        rightBack.setDirection(DcMotor.Direction.FORWARD);
 
 
         telemetry.addData("Say", "Hello Driver");    //
@@ -80,34 +93,44 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
         /* gamepad 1 start ------------------------------------------------*/
-        frontLeft.setPower(gamepad1.left_stick_y);
-        frontRight.setPower(-gamepad1.right_stick_y);
-        backLeft.setPower(-gamepad1.left_stick_y);
-        backRight.setPower(gamepad1.right_stick_y);
+        leftFront.setPower(gamepad1.left_stick_y);
+        rightFront.setPower(-gamepad1.right_stick_y);
+        leftBack.setPower(-gamepad1.left_stick_y);
+        rightBack.setPower(gamepad1.right_stick_y);
         telemetry.log().add("loop enter");
 
 
         if (gamepad1.right_bumper) {
-            frontLeft.setPower(STRAFE_SPEED);
-            frontRight.setPower(STRAFE_SPEED);
-            backLeft.setPower(STRAFE_SPEED);
-            backRight.setPower(STRAFE_SPEED);
+            leftFront.setPower(STRAFE_SPEED);
+            rightFront.setPower(STRAFE_SPEED);
+            leftBack.setPower(STRAFE_SPEED);
+            rightBack.setPower(STRAFE_SPEED);
         }
         else if (gamepad1.left_bumper) {
-            frontLeft.setPower(-STRAFE_SPEED);
-            frontRight.setPower(-STRAFE_SPEED);
-            backLeft.setPower(-STRAFE_SPEED);
-            backRight.setPower(-STRAFE_SPEED);
+            leftFront.setPower(-STRAFE_SPEED);
+            rightFront.setPower(-STRAFE_SPEED);
+            leftBack.setPower(-STRAFE_SPEED);
+            rightBack.setPower(-STRAFE_SPEED);
         }
         else {
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+            leftBack.setPower(0);
+            rightBack.setPower(0);
         }
         /* gamepad 2 start ------------------------------------------------*/
-        if (gamepad2.x) {
-            telemetry.log().add("button x pressed");
+        if (gamepad2.y) {
+            telemetry.log().add("button y pressed");
+            Drone.setPosition(1);
+        }
+
+        if (gamepad2.right_stick_button) {
+            telemetry.log().add("outtake activated");
+            outtake_extension.setPower(1);
+        }
+
+        if (gamepad2.left_stick_button) {
+            telemetry.log().add("intake activated");
             Intake.setPower(1);
         }
 
