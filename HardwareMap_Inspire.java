@@ -61,9 +61,9 @@ public class HardwareMap_Inspire {
     public DcMotor rightBack = null;
     public DcMotor extension = null;
 
-    public DcMotor Intake = null;
+    public DcMotor intake = null;
 
-    public DcMotor Outtake = null;
+    public DcMotor outtake = null;
 
     public Servo Drone = null;
     public Servo left_bucket = null;
@@ -90,9 +90,9 @@ public class HardwareMap_Inspire {
         leftBack = hwMap.get(DcMotor.class, "backLeft");
         rightFront = hwMap.get(DcMotor.class, "frontRight");
         rightBack = hwMap.get(DcMotor.class, "backRight");
-        Intake = hwMap.get(DcMotor.class, "Intake");
-        Outtake = hwMap.get(DcMotor.class, "Outtake");
-        Drone = hwMap.get(Servo.class, "Drone");
+        Intake = hwMap.get(DcMotor.class, "intake");
+        Outtake = hwMap.get(DcMotor.class, "outtake");
+        Drone = hwMap.get(Servo.class, "drone");
         left_bucket = hwMap.get(Servo.class, "left_bucket_servo");
         right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
         outtake_wheel = hwMap.get(Servo.class, "outtake_wheel_servo");
