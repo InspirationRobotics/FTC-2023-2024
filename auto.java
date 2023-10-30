@@ -59,7 +59,7 @@ import org.firstinspires.ftc.teamcode.TimedMecanumDrive;
  */
 
 @Autonomous(name="Autonomous!", group="Robot")
-@Disabled
+
 public class auto extends LinearOpMode  {
 
     /* Declare OpMode members. */
@@ -80,24 +80,24 @@ public class auto extends LinearOpMode  {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
+    static final double     FORWARD_SPEED = 0.4;
+    static final double     TURN_SPEED    = 0.4;
 
     @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftFront  = hardwareMap.get(DcMotor.class, "leftFront");
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        leftBack  = hardwareMap.get(DcMotor.class, "leftBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
 
@@ -110,7 +110,7 @@ public class auto extends LinearOpMode  {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Drive forward for 3 seconds
+        // Step 1:  Drive forward for 1 seconds
         leftFront.setPower(FORWARD_SPEED);
         leftBack.setPower(FORWARD_SPEED);
         rightFront.setPower(FORWARD_SPEED);
@@ -121,46 +121,25 @@ public class auto extends LinearOpMode  {
             telemetry.update();
         }
 
-        // Step 2: Drive back for 3 seconds
-        leftFront.setPower(-FORWARD_SPEED);
-        leftBack.setPower(-FORWARD_SPEED);
-        rightFront.setPower(-FORWARD_SPEED);
-        rightBack.setPower(-FORWARD_SPEED);
+        // Step 2:  Spin right for 0.5 seconds
+        leftFront.setPower(TURN_SPEED);
+        leftBack.setPower(TURN_SPEED);
+        rightFront.setPower(-TURN_SPEED);
+        rightBack.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.1)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-        // Step 3:  Spin right for 1.3 seconds
-        leftFront.setPower(TURN_SPEED);
-        rightFront.setPower(-TURN_SPEED);
-        leftBack.setPower(TURN_SPEED);
-        rightBack.setPower(-TURN_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 4: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
 
-        // Step 4:  Drive forward for 5.5 seconds
         leftFront.setPower(FORWARD_SPEED);
-        rightFront.setPower(FORWARD_SPEED);
         leftBack.setPower(FORWARD_SPEED);
+        rightFront.setPower(FORWARD_SPEED);
         rightBack.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
-            telemetry.addData("Path", "Leg 5: %4.1f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 4)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-
-        // Step 5:  Stop/Park
-        leftFront.setPower(0);
-        rightFront.setPower(0);
-        leftBack.setPower(0);
-        rightBack.setPower(0);
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-        sleep(1000);
     }
 }
