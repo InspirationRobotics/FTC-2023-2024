@@ -46,7 +46,6 @@ public class teleop extends OpMode {
     public void init() {
 
         intake = hardwareMap.dcMotor.get("intake");
-        intake.setDirection(DcMotor.Direction.REVERSE);
         telemetry.addData("Say", "Hello Driver");    //
     }
 
