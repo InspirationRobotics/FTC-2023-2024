@@ -1,12 +1,3 @@
-package org.firstinspires.ftc.teamcode;
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -36,85 +27,185 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@TeleOp(name="TeleOp_Advik", group="Pushbot")
-public class TeleopAdvik extends OpMode {
+package org.firstinspires.ftc.robotcontroller.external.samples;
 
-    private ElapsedTime runtime = new ElapsedTime();
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+/*
+ * This OpMode illustrates the concept of driving a path based on encoder counts.
+ * The code is structured as a LinearOpMode
+ *
+ * The code REQUIRES that you DO have encoders on the wheels,
+ *   otherwise you would use: RobotAutoDriveByTime;
+ *
+ *  This code ALSO requires that the drive Motors have been configured such that a positive
+ *  power command moves them forward, and causes the encoders to count UP.
+ *
+ *   The desired path in this example is:
+ *   - Drive forward for 48 inches
+ *   - Spin right for 12 Inches
+ *   - Drive Backward for 24 inches
+ *   - Stop and close the claw.
+ *
+ *  The code is written using a method called: encoderDrive(speed, leftInches, rightInches, timeoutS)
+ *  that performs the actual movement.
+ *  This method assumes that each movement is relative to the last stopping place.
+ *  There are other ways to perform encoder based moves, but this method is probably the simplest.
+ *  This code uses the RUN_TO_POSITION mode to enable the Motor controllers to generate the run profile
+ *
+ * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
+ */
+
+@Autonomous(name="Autonomous With Encoders Test", group="Robot")
+@Disabled
+public class RobotAutoDriveByEncoder_Linear extends LinearOpMode {
+
+    /* Declare OpMode members. */
     public DcMotor leftFront = null;
     public DcMotor leftBack = null;
     public DcMotor rightFront = null;
     public DcMotor rightBack = null;
+    private ElapsedTime     runtime = new ElapsedTime();
 
-     public DcMotor Intake = null;
+    // Calculate the COUNTS_PER_INCH for your specific drive train.
+    // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
+    // For external drive gearing, set DRIVE_GEAR_REDUCTION as needed.
+    // For example, use a value of 2.0 for a 12-tooth spur gear driving a 24-tooth spur gear.
+    // This is gearing DOWN for less speed and more torque.
+    // For gearing UP, use a gear ratio less than 1.0. Note this will affect the direction of wheel rotation.
+    static final double     COUNTS_PER_MOTOR_REV    = 537.7 ;    // GoBuilda Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1;     // GoBuilda Motor Gear Ratio
+    static final double     WHEEL_DIAMETER_INCHES   = 3.7995 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double     DRIVE_SPEED             = 0.6;
+    static final double     TURN_SPEED              = 0.5;
 
-    public DcMotor outtake_extension = null;
+    @Override
+    public void runOpMode() {
 
-    public Servo Drone = null;
+        // Initialize the drive system variables.
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
 
-
-    public static final double turnSpeed = 0.4;
-
-
-    public void init() {
-
-        leftFront = hardwareMap.dcMotor.get("leftFront");
-        leftBack = hardwareMap.dcMotor.get("leftBack");
-        rightFront = hardwareMap.dcMotor.get("rightFront");
-        rightBack = hardwareMap.dcMotor.get("rightBack");
-        Intake = hardwareMap.dcMotor.get("Intake");
-        outtake_extension = hardwareMap.dcMotor.get("outtake_extension");
-        Drone = hardwareMap.servo.get("Drone");
 
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        telemetry.addData("Say", "Hello Driver");    //
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Send telemetry message to indicate successful Encoder reset
+        telemetry.addData("Starting at",  "%7d :%7d",
+                          leftDrive.getCurrentPosition(),
+                          rightDrive.getCurrentPosition());
+        telemetry.update();
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+
+
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+        sleep(1000);  // pause to display final telemetry message.
     }
-
 
     /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
+     *  Method to perform a relative move, based on encoder counts.
+     *  Encoders are not reset as the move is based on the current position.
+     *  Move will stop if any of three conditions occur:
+     *  1) Move gets to the desired position
+     *  2) Move runs out of time
+     *  3) Driver stops the OpMode running.
      */
-    @Override
-    public void init_loop() {
+    public void encoderDrive(double speed, double inches) {
+        int newTarget;
 
+        // Determine new target position, and pass to motor controller
+        newTarget = leftDrive.getCurrentPosition() + (int)(inches * COUNTS_PER_INCH);
+        leftFront.setTargetPosition(newTarget);
+        leftBack.setTargetPosition(newTarget);
+        rightFront.setTargetPosition(newTarget);
+        rightBack.setTargetPosition(newTarget);
+
+        // Turn On RUN_TO_POSITION
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+        runtime.reset();
+        leftFront.setPower(speed);
+        rightFront.setPower(speed);
+        leftBack.setPower(speed);
+        rightBack.setPower(speed);
+
+//        // Stop all motion;
+//        leftFront.setPower(0);
+//        leftBack.setPower(0);
+//        rightFront.setPower(0);
+//        rightBack.setPower(0);
+//
+//        // Turn off RUN_TO_POSITION
+//        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        }
     }
 
-    @Override
-    public void start() {
+    public void encoderStrafe(double speed, double inches) {
+        int newTarget;
 
-    }
+        // Determine new target position, and pass to motor controller
+        newTarget = leftDrive.getCurrentPosition() + (int)(inches * COUNTS_PER_INCH);
+        leftFront.setTargetPosition(-newTarget);
+        leftBack.setTargetPosition(newTarget);
+        rightFront.setTargetPosition(newTarget);
+        rightBack.setTargetPosition(-newTarget);
 
-    @Override
-    public void loop() {
-        /* gamepad 1 start ------------------------------------------------*/
-        leftFront.setPower(gamepad1.left_stick_y);
-        rightFront.setPower(gamepad1.right_stick_y);
-        leftBack.setPower(gamepad1.right_stick_y);
-        rightBack.setPower(gamepad1.left_stick_y);
-        telemetry.log().add("loop enter");
+        // Turn On RUN_TO_POSITION
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        // reset the timeout time and start motion.
+        runtime.reset();
+        leftFront.setPower(speed);
+        rightFront.setPower(speed);
+        leftBack.setPower(speed);
+        rightBack.setPower(speed);
 
-        if (gamepad1.right_bumper) {
-            leftFront.setPower(turnSpeed);
-            rightFront.setPower(-turnSpeed);
-            leftBack.setPower(turnSpeed);
-            rightBack.setPower(-turnSpeed);
-        }
-        else if (gamepad1.left_bumper) {
-            leftFront.setPower(-turnSpeed);
-            rightFront.setPower(turnSpeed);
-            leftBack.setPower(-turnSpeed);
-            rightBack.setPower(turnSpeed);
-        }
-        else {
-            leftFront.setPower(0);
-            rightFront.setPower(0);
-            leftBack.setPower(0);
-            rightBack.setPower(0);
-        }
+//        // Stop all motion;
+//        leftFront.setPower(0);
+//        leftBack.setPower(0);
+//        rightFront.setPower(0);
+//        rightBack.setPower(0);
+//
+//        // Turn off RUN_TO_POSITION
+//        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        }
     }
 }
