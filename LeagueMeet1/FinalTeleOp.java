@@ -45,7 +45,7 @@ public abstract class FinalTeleOp extends OpMode {
     public DcMotor rightFront = null;
     public DcMotor rightBack = null;
     public DcMotor outtake_extension = null;
-    public DcMotor Intake = null;
+    public DcMotor intake = null;
 
     public DcMotor hanging = null;
     public Servo drone = null;
@@ -75,7 +75,7 @@ public abstract class FinalTeleOp extends OpMode {
         leftBack = hwMap.get(DcMotor.class, "leftBack");
         rightFront = hwMap.get(DcMotor.class, "rightFront");
         rightBack = hwMap.get(DcMotor.class, "rightBack");
-        Intake = hwMap.get(DcMotor.class, "Intake");
+        intake = hwMap.get(DcMotor.class, "intake");
         outtake_extension = hwMap.get(DcMotor.class, "outtake_extension");
         hanging = hwMap.get(DcMotor.class, "hanging");
         drone = hwMap.get(Servo.class, "drone");
@@ -143,7 +143,7 @@ public abstract class FinalTeleOp extends OpMode {
         if (gamepad2.left_stick_y > 0.2) {
             outtake_wheel.setPosition(1);
         }
-        Intake.setPower(gamepad2.left_stick_y);
+        intake.setPower(gamepad2.left_stick_y);
         outtake_extension.setPower(gamepad2.right_stick_y);
 
         if(gamepad2.a)
