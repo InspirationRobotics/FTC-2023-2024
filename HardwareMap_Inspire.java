@@ -30,10 +30,14 @@ package org.firstinspires.ftc.teamcode;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import android.graphics.Camera;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 
 public class HardwareMap_Inspire {
@@ -61,14 +65,16 @@ public class HardwareMap_Inspire {
     public DcMotor rightBack = null;
     public DcMotor extension = null;
 
-    public DcMotor intake = null;
+    public DcMotor Intake = null;
 
-    public DcMotor outtake = null;
+    public DcMotor outtake_extension = null;
 
     public Servo Drone = null;
     public Servo left_bucket = null;
     public Servo right_bucket = null;
     public Servo outtake_wheel = null;
+
+    public WebcamName Webcam1 = null;
 
 
 
@@ -86,16 +92,16 @@ public class HardwareMap_Inspire {
         // Save reference to Hardware map
         hwMap = ahwMap;
         // Define and Initialize Motors
-        leftFront = hwMap.get(DcMotor.class, "frontLeft");
-        leftBack = hwMap.get(DcMotor.class, "backLeft");
-        rightFront = hwMap.get(DcMotor.class, "frontRight");
-        rightBack = hwMap.get(DcMotor.class, "backRight");
-        Intake = hwMap.get(DcMotor.class, "intake");
-        Outtake = hwMap.get(DcMotor.class, "outtake");
-        Drone = hwMap.get(Servo.class, "drone");
+        leftFront = hwMap.get(DcMotor.class, "leftFront");
+        leftBack = hwMap.get(DcMotor.class, "leftBack");
+        rightFront = hwMap.get(DcMotor.class, "rightFront");
+        rightBack = hwMap.get(DcMotor.class, "rightBack");
+        Intake = hwMap.get(DcMotor.class, "Intake");
+        outtake_extension = hwMap.get(DcMotor.class, "outtake_extension");
+        Drone = hwMap.get(Servo.class, "Drone");
         left_bucket = hwMap.get(Servo.class, "left_bucket_servo");
         right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
-        outtake_wheel = hwMap.get(Servo.class, "outtake_wheel_servo");
+        outtake_wheel = hwMap.get(Servo.class, "outtake_wheel");
 
 
        /*
