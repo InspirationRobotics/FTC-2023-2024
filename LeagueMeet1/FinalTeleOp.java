@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -36,8 +37,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@TeleOp(name="Final TeleOp")
-public abstract class FinalTeleOp extends OpMode {
+@TeleOp(name="LM2 TeleOp")
+public class Final_TeleOp extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     public DcMotor leftFront = null;
@@ -47,42 +48,48 @@ public abstract class FinalTeleOp extends OpMode {
     public DcMotor outtake_extension = null;
     public DcMotor intake = null;
 
-    public DcMotor hanging = null;
+    public DcMotor hanging1 = null;
+    public DcMotor hanging2 = null;
     public Servo drone = null;
     public Servo left_bucket = null;
     public Servo right_bucket = null;
-    public Servo outtake_wheel = null;
+    public CRServo outtake_wheel = null;
 
     public Servo hanging_servo = null;
 
 
-    public static final double timeShift = 0.1;
-    public static final double RightServoPos1 = 0.3 + timeShift;
-    public static final double RightServoPos2 = 0.9;
-    public static final double LeftServoPos1 = 0.3;
-    public static final double LeftServoPos2 = 0.9 - timeShift;
+    public static final double RightServoPos1 = 0.4;
+    public static final double RightServoPos2 = .1;
+    public static final double LeftServoPos1 = 0.7;
+    public static final double LeftServoPos2 = 1.2;
 
 
     public static final double turnSpeed = 0.4;
 
     HardwareMap hwMap = null;
 
-    public void init(HardwareMap ahwMap) {
+    @Override
+    public void init() {
+
+        telemetry.addData("Status", "Initialized");
+
         // Save reference to Hardware map
-        hwMap = ahwMap;
         // Define and Initialize Motors
-        leftFront = hwMap.get(DcMotor.class, "leftFront");
-        leftBack = hwMap.get(DcMotor.class, "leftBack");
-        rightFront = hwMap.get(DcMotor.class, "rightFront");
-        rightBack = hwMap.get(DcMotor.class, "rightBack");
-        intake = hwMap.get(DcMotor.class, "intake");
-        outtake_extension = hwMap.get(DcMotor.class, "outtake_extension");
-        hanging = hwMap.get(DcMotor.class, "hanging");
-        drone = hwMap.get(Servo.class, "drone");
-        left_bucket = hwMap.get(Servo.class, "left_bucket_servo");
-        right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
-        outtake_wheel = hwMap.get(Servo.class, "outtake_wheel");
-        hanging_servo = hwMap.get(Servo.class, "hanging_servo");
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");//ctrl 0
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");//ctrl 1
+        rightFront = hardwareMap.get(DcMotor.class, "rightFront");//exp 0
+        rightBack = hardwareMap.get(DcMotor.class, "rightBack");//exp 1
+        intake = hardwareMap.get(DcMotor.class, "intake");//ctrl 2
+        outtake_extension = hardwareMap.get(DcMotor.class, "outtake_extension");//exp 3
+        hanging1 = hardwareMap.get(DcMotor.class, "hanging_1");// exp 3
+        hanging2 = hardwareMap.get(DcMotor.class, "hanging_2");//ctrl 3
+        drone = hardwareMap.get(Servo.class, "drone");//exp 4
+        hanging_servo = hardwareMap.get(Servo.class, "hanging_servo");//exp 2
+
+        left_bucket = hardwareMap.get(Servo.class, "left_bucket_servo");//exp 5
+        right_bucket = hardwareMap.get(Servo.class, "right_bucket_servo");//ctrl 5
+        outtake_wheel = hardwareMap.get(CRServo.class, "outtake_wheel");//ctrl 4
+        //hanginglift = hardwareMap.get(DcMotor.class, "hanginglift   ");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
@@ -99,8 +106,6 @@ public abstract class FinalTeleOp extends OpMode {
      */
     @Override
     public void init_loop() {
-        left_bucket.setPosition(LeftServoPos1);
-        right_bucket.setPosition(RightServoPos1);
     }
 
     @Override
@@ -109,21 +114,31 @@ public abstract class FinalTeleOp extends OpMode {
     }
 
     @Override
+    public void stop() {
+    }
+    @Override
     public void loop() {
         /* gamepad 1 start ------------------------------------------------*/
-        leftFront.setPower(gamepad1.left_stick_y);
-        rightFront.setPower(gamepad1.right_stick_y);
-        leftBack.setPower(gamepad1.right_stick_y);
-        rightBack.setPower(gamepad1.left_stick_y);
+
         telemetry.log().add("loop enter");
 
+        if(gamepad2.dpad_up){
+            right_bucket.setPosition(RightServoPos1);
+            left_bucket.setPosition(LeftServoPos1);
+            telemetry.addData("In:", "Position 1");
 
-        if (gamepad1.right_bumper) {
+        } else if(gamepad2.dpad_down){
+            right_bucket.setPosition(RightServoPos2);
+            left_bucket.setPosition(LeftServoPos2);
+            telemetry.addData("In:", "Position 2");
+        }
+
+        if (gamepad1.dpad_right) {
             leftFront.setPower(turnSpeed);
             rightFront.setPower(-turnSpeed);
             leftBack.setPower(turnSpeed);
             rightBack.setPower(-turnSpeed);
-        } else if (gamepad1.left_bumper) {
+        } else if (gamepad1.dpad_left) {
             leftFront.setPower(-turnSpeed);
             rightFront.setPower(turnSpeed);
             leftBack.setPower(-turnSpeed);
@@ -134,38 +149,84 @@ public abstract class FinalTeleOp extends OpMode {
             leftBack.setPower(0);
             rightBack.setPower(0);
         }
-
+        intake.setPower(gamepad2.right_stick_y);
         if (gamepad1.x) {
-            hanging.setPower(1);
+            hanging2.setPower(1);
+            hanging1.setPower(1);
+        } else if (gamepad1.b){
+            hanging2.setPower(-1);
+            hanging1.setPower(-1);
+
+        } else {
+            hanging2.setPower(0);
+            hanging1.setPower(0);
+
         }
 
         /* gamepad 2 start -----------------------------------------------*/
-        if (gamepad2.left_stick_y > 0.2) {
-            outtake_wheel.setPosition(1);
-        }
-        intake.setPower(gamepad2.left_stick_y);
-        outtake_extension.setPower(gamepad2.right_stick_y);
+        telemetry.addData("wefwe",12);
+        /*if (gamepad1.right_stick_y > 0.2) {
 
-        if(gamepad2.a)
+            rightFront.setPower(gamepad1.right_stick_y);
+            rightBack.setPower(gamepad1.left_stick_y);
+        } else if (gamepad1.right_stick_y < -0.2) {
+            rightFront.setPower(gamepad1.right_stick_y);
+            rightBack.setPower(gamepad1.right_stick_y);
+        }
+        if (gamepad1.left_stick_y > 0.2) {
+            leftFront.setPower(gamepad1.left_stick_y);
+            leftBack.setPower(gamepad1.left_stick_y);
+
+        } else if (gamepad1.left_stick_y < -0.2) {
+            leftFront.setPower(gamepad1.left_stick_y);
+            leftBack.setPower(gamepad1.left_stick_y);
+
+        }*/
+        leftFront.setPower(gamepad1.left_stick_y);
+        leftBack.setPower(gamepad1.left_stick_y);
+        rightFront.setPower(gamepad1.right_stick_y);
+        rightBack.setPower(gamepad1.right_stick_y);
+
+        if (gamepad2.left_stick_y > 0.2) {
+            outtake_extension.setPower(1);
+        } else if (gamepad2.left_stick_y < -0.2) {
+
+            outtake_extension.setPower(-1);
+
+        }
+        //werwerwer
+
+        if (gamepad2.right_bumper)
+            outtake_wheel.setPower(1);
+        else if (gamepad2.left_bumper)
+            outtake_wheel.setPower(-1);
+        /*if(gamepad2.a)
         {
             right_bucket.setPosition(RightServoPos1);
             left_bucket.setPosition(LeftServoPos1);
             telemetry.addData("In:", "Position 1");
-        }
-        if(gamepad2.x)
+        }*/
+        /*if(gamepad2.x)
         {
             right_bucket.setPosition(RightServoPos2);
             left_bucket.setPosition(LeftServoPos2);
             telemetry.addData("In:", "Position 2");
-        }
+        }*/
         if (gamepad2.y) {
             telemetry.log().add("drone launched");
-            drone.setPosition(0.7);
+            drone.setPosition(0);
+        } else if (gamepad2.x) {
+            drone.setPosition(.4);//43262365
         }
 
-        if(gamepad2.b) {
+        if(gamepad2.right_trigger>0.2) {
             hanging_servo.setPosition(1);
             telemetry.log().add("hanging activated");
+        } else if(gamepad2.left_trigger<-0.2) {
+            hanging_servo.setPosition(0);
+            telemetry.log().add("hanging activated");
+        } else{
+
         }
     }
 }
