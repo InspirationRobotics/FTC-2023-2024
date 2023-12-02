@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+
 
 /*
  * Constants shared between multiple drive types.
@@ -75,17 +76,26 @@ public class DriveConstants {
      * This is only 85% of the theoretical maximum velocity of the bot, following the recommendation above.
      * This is capped at 85% because there are a number of variables that will prevent your bot from actually
      * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiencies, etc.
+<<<<<<< HEAD
      * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically 
      * max velocity. The theoretically maximum velocity is 61.74461068624151 in/s.
      * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
      * affected if it is aiming for a velocity not actually possible.
      * 
+=======
+     * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically
+     * max velocity. The theoretically maximum velocity is 61.74461068624151 in/s.
+     * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
+     * affected if it is aiming for a velocity not actually possible.
+     *
+>>>>>>> c2083e9d47a42aa1f961fb552bedc817f00f439f
      * The maximum acceleration is somewhat arbitrary and it is recommended that you tweak this yourself based on
      * actual testing. Just set it at a reasonable value and keep increasing until your path following starts
      * to degrade. As of now, it simply mirrors the velocity, resulting in 52.48291908330528 in/s/s
      *
      * Maximum Angular Velocity is calculated as: maximum velocity / trackWidth * (180 / Math.PI) but capped at 360°/s.
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
+<<<<<<< HEAD
      
      */
     public static double MAX_VEL = 52.48291908330528;
@@ -111,4 +121,5 @@ public class DriveConstants {
             RevHubOrientationOnRobot.LogoFacingDirection.UP;
     public static RevHubOrientationOnRobot.UsbFacingDirection USB_FACING_DIR =
             RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+
 }
