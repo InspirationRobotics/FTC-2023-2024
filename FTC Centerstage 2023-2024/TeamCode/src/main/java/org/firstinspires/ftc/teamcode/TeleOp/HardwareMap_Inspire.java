@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 
 public class HardwareMap_Inspire {
@@ -75,6 +76,13 @@ public class HardwareMap_Inspire {
 
     public Servo hanging_servo = null;
 
+    public Encoder rightEncoder = null;
+
+    public Encoder leftEncoder = null;
+
+    public Encoder frontEncoder = null;
+
+
 
 
     /* local OpMode members. */
@@ -103,6 +111,9 @@ public class HardwareMap_Inspire {
         right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
         outtake_wheel = hwMap.get(Servo.class, "outtake_wheel");
         hanging_servo = hwMap.get(Servo.class, "hanging_servo");
+        leftEncoder = hwMap.get(Encoder.class, "hanging 2");
+        rightEncoder = hwMap.get(Encoder.class, "leftBack");
+        rightEncoder = hwMap.get(Encoder.class, "intake");
 
     }
 }

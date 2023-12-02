@@ -89,7 +89,6 @@ public class Final_TeleOp extends OpMode {
         left_bucket = hardwareMap.get(Servo.class, "left_bucket_servo");//exp 5
         right_bucket = hardwareMap.get(Servo.class, "right_bucket_servo");//ctrl 5
         outtake_wheel = hardwareMap.get(CRServo.class, "outtake_wheel");//ctrl 4
-        //hanginglift = hardwareMap.get(DcMotor.class, "hanginglift   ");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
