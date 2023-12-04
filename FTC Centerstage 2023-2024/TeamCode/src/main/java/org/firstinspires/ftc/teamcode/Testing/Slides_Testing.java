@@ -43,7 +43,7 @@ public class Slides_Testing extends OpMode {
 
     public void init() {
 
-        outtake_extension = hardwareMap.dcMotor.get("Outtake");
+        outtake_extension = hardwareMap.dcMotor.get("outtake_extension");
 
 
         telemetry.addData("Say", "Hello Driver");    //

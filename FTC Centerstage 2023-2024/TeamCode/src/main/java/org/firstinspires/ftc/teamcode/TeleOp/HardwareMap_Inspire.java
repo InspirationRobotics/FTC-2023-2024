@@ -111,10 +111,9 @@ public class HardwareMap_Inspire {
         right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
         outtake_wheel = hwMap.get(Servo.class, "outtake_wheel");
         hanging_servo = hwMap.get(Servo.class, "hanging_servo");
-        leftEncoder = hwMap.get(Encoder.class, "hanging 2");
+        leftEncoder = hwMap.get(Encoder.class, "hanging_2");
         rightEncoder = hwMap.get(Encoder.class, "leftBack");
         rightEncoder = hwMap.get(Encoder.class, "intake");
-
     }
 }
 

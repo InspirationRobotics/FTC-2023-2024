@@ -44,7 +44,7 @@ public class Drone_Testing extends OpMode {
 
     public void init() {
 
-        Drone = hardwareMap.servo.get("Drone");
+        Drone = hardwareMap.servo.get("drone");
 
 
         telemetry.addData("Say", "Hello Driver");    //

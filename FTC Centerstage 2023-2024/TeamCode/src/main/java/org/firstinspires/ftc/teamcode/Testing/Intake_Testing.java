@@ -45,7 +45,7 @@ public class Intake_Testing extends OpMode {
 
     public void init() {
 
-        Intake = hardwareMap.dcMotor.get("Intake");
+        Intake = hardwareMap.dcMotor.get("intake");
         telemetry.addData("Say", "Hello Driver");    //
     }
 
