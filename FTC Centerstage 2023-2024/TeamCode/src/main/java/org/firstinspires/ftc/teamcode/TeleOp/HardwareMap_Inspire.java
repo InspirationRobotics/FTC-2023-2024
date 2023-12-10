@@ -80,7 +80,7 @@ public class HardwareMap_Inspire {
 
     public Encoder leftEncoder = null;
 
-    public Encoder frontEncoder = null;
+    public Encoder middleEncoder = null;
 
 
 
@@ -103,17 +103,17 @@ public class HardwareMap_Inspire {
         leftBack = hwMap.get(DcMotor.class, "leftBack");
         rightFront = hwMap.get(DcMotor.class, "rightFront");
         rightBack = hwMap.get(DcMotor.class, "rightBack");
-        intake = hwMap.get(DcMotor.class, "intake");
-        outtake_extension = hwMap.get(DcMotor.class, "outtake_extension");
+        //intake = hwMap.get(DcMotor.class, "intake");
+        //outtake_extension = hwMap.get(DcMotor.class, "outtake_extension");
         hanging = hwMap.get(DcMotor.class, "hanging");
         drone = hwMap.get(Servo.class, "drone");
-        left_bucket = hwMap.get(Servo.class, "left_bucket_servo");
-        right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
-        outtake_wheel = hwMap.get(Servo.class, "outtake_wheel");
+        //left_bucket = hwMap.get(Servo.class, "left_bucket_servo");
+        //right_bucket = hwMap.get(Servo.class, "right_bucket_servo");
+        //outtake_wheel = hwMap.get(Servo.class, "outtake_wheel");
         hanging_servo = hwMap.get(Servo.class, "hanging_servo");
-        leftEncoder = hwMap.get(Encoder.class, "hanging_2");
-        rightEncoder = hwMap.get(Encoder.class, "leftBack");
-        rightEncoder = hwMap.get(Encoder.class, "intake");
+        leftEncoder = hwMap.get(Encoder.class, "leftBack");
+        rightEncoder = hwMap.get(Encoder.class, "rightBack");
+        middleEncoder = hwMap.get(Encoder.class, "rightFront");
     }
 }
 

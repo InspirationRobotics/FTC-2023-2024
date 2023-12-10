@@ -45,23 +45,25 @@ public class Final_TeleOp extends OpMode {
     public DcMotor leftBack = null;
     public DcMotor rightFront = null;
     public DcMotor rightBack = null;
-    public DcMotor outtake_extension = null;
-    public DcMotor intake = null;
+    //public DcMotor outtake_extension = null;
+    //public DcMotor intake = null;
 
-    public DcMotor hanging1 = null;
-    public DcMotor hanging2 = null;
+    public DcMotor hanging = null;
+    //public DcMotor hanging2 = null;
     public Servo drone = null;
-    public Servo left_bucket = null;
-    public Servo right_bucket = null;
-    public CRServo outtake_wheel = null;
 
-    public Servo hanging_servo = null;
+    public Servo outtake_servo = null;
+    //public Servo left_bucket = null;
+    //public Servo right_bucket = null;
+    //public CRServo outtake_wheel = null;
+
+    //public Servo hanging_servo = null;
 
 
-    public static final double RightServoPos1 = 0.4;
-    public static final double RightServoPos2 = .1;
-    public static final double LeftServoPos1 = 0.7;
-    public static final double LeftServoPos2 = 1.2;
+    //public static final double RightServoPos1 = 0.4;
+    //public static final double RightServoPos2 = .1;
+    //public static final double LeftServoPos1 = 0.7;
+    //public static final double LeftServoPos2 = 1.2;
 
 
     public static final double turnSpeed = 0.4;
@@ -79,16 +81,18 @@ public class Final_TeleOp extends OpMode {
         leftBack = hardwareMap.get(DcMotor.class, "leftBack");//ctrl 1
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");//exp 0
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");//exp 1
-        intake = hardwareMap.get(DcMotor.class, "intake");//ctrl 2
-        outtake_extension = hardwareMap.get(DcMotor.class, "outtake_extension");//exp 3
-        hanging1 = hardwareMap.get(DcMotor.class, "hanging_1");// exp 3
-        hanging2 = hardwareMap.get(DcMotor.class, "hanging_2");//ctrl 3
+        hanging = hardwareMap.get(DcMotor.class, "hanging");// exp 3
         drone = hardwareMap.get(Servo.class, "drone");//exp 4
-        hanging_servo = hardwareMap.get(Servo.class, "hanging_servo");//exp 2
+        outtake_servo = hardwareMap.get(Servo.class, "outtake_servo");//exp 4
 
-        left_bucket = hardwareMap.get(Servo.class, "left_bucket_servo");//exp 5
-        right_bucket = hardwareMap.get(Servo.class, "right_bucket_servo");//ctrl 5
-        outtake_wheel = hardwareMap.get(CRServo.class, "outtake_wheel");//ctrl 4
+        //components not being used for LM2:
+        //hanging_servo = hardwareMap.get(Servo.class, "hanging_servo");//exp 2
+        //left_bucket = hardwareMap.get(Servo.class, "left_bucket_servo");//exp 5
+        //right_bucket = hardwareMap.get(Servo.class, "right_bucket_servo");//ctrl 5
+        //outtake_wheel = hardwareMap.get(CRServo.class, "outtake_wheel");//ctrl 4
+        //intake = hardwareMap.get(DcMotor.class, "intake");//ctrl 2
+        //outtake_extension = hardwareMap.get(DcMotor.class, "outtake_extension");//exp 3
+        //hanging2 = hardwareMap.get(DcMotor.class, "hanging_2");//ctrl 3
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
@@ -121,17 +125,13 @@ public class Final_TeleOp extends OpMode {
 
         telemetry.log().add("loop enter");
 
-        if(gamepad2.dpad_up){
-            right_bucket.setPosition(RightServoPos1);
-            left_bucket.setPosition(LeftServoPos1);
-            telemetry.addData("In:", "Position 1");
+        //forward backward controls
+        leftFront.setPower(gamepad1.left_stick_y);
+        leftBack.setPower(gamepad1.left_stick_y);
+        rightFront.setPower(gamepad1.right_stick_y);
+        rightBack.setPower(gamepad1.right_stick_y);
 
-        } else if(gamepad2.dpad_down){
-            right_bucket.setPosition(RightServoPos2);
-            left_bucket.setPosition(LeftServoPos2);
-            telemetry.addData("In:", "Position 2");
-        }
-
+        //turning controls
         if (gamepad1.dpad_right) {
             leftFront.setPower(turnSpeed);
             rightFront.setPower(-turnSpeed);
@@ -148,41 +148,28 @@ public class Final_TeleOp extends OpMode {
             leftBack.setPower(0);
             rightBack.setPower(0);
         }
-        intake.setPower(gamepad2.right_stick_y);
-        if (gamepad1.x) {
-            hanging2.setPower(1);
-            hanging1.setPower(1);
-            hanging1.setTargetPosition(1);
-        } else if (gamepad1.b){
-            hanging2.setPower(-1);
-            hanging1.setPower(-1);
 
-        } else {
-            hanging2.setPower(0);
-            hanging1.setPower(0);
+        //strafing controls
 
+            //strafing right
+        if (gamepad1.left_bumper) {
+            leftFront.setPower(-1);
+            leftBack.setPower(1);
+            rightFront.setPower(1);
+            rightBack.setPower(-1);
+        }
+
+        //strafing left
+        if (gamepad1.left_bumper) {
+            leftFront.setPower(1);
+            leftBack.setPower(-1);
+            rightFront.setPower(-1);
+            rightBack.setPower(1);
         }
 
         /* gamepad 2 start -----------------------------------------------*/
 
-        leftFront.setPower(gamepad1.left_stick_y);
-        leftBack.setPower(gamepad1.left_stick_y);
-        rightFront.setPower(gamepad1.right_stick_y);
-        rightBack.setPower(gamepad1.right_stick_y);
-
-        if (gamepad2.left_stick_y > 0.2) {
-            outtake_extension.setPower(1);
-        } else if (gamepad2.left_stick_y < -0.2) {
-
-            outtake_extension.setPower(-1);
-
-        }
-
-        if (gamepad2.right_bumper)
-            outtake_wheel.setPower(1);
-        else if (gamepad2.left_bumper)
-            outtake_wheel.setPower(-1);
-
+        //drone launcher
         if (gamepad2.y) {
             telemetry.log().add("drone launched");
             drone.setPosition(0);
@@ -190,14 +177,17 @@ public class Final_TeleOp extends OpMode {
             drone.setPosition(.4);
         }
 
-        if(gamepad2.a) {
-            hanging_servo.setPosition(1);
+        //hanging
+        if(gamepad2.x) {
+            hanging.setPower(1);
             telemetry.log().add("hanging activated");
-        } else if(gamepad2.b) {
-            hanging_servo.setPosition(0);
-            telemetry.log().add("hanging activated");
-        } else{
+        }
 
+        //outtake
+        if(gamepad1.a){
+            outtake_servo.setPosition(1);
+        } else if (gamepad2.b) {
+            outtake_servo.setPosition(0);
         }
     }
 }
