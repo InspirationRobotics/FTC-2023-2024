@@ -70,6 +70,14 @@ public class Final_TeleOp extends OpMode {
 
     HardwareMap hwMap = null;
 
+    double leftFrontSpeed = 0;
+    double leftRearSpeed = 0;
+    double rightFrontSpeed = 0;
+    double rightRearSpeed = 0;
+
+
+
+
     @Override
     public void init() {
 
@@ -77,13 +85,13 @@ public class Final_TeleOp extends OpMode {
 
         // Save reference to Hardware map
         // Define and Initialize Motors
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");//ctrl 0
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");//ctrl 1
-        rightFront = hardwareMap.get(DcMotor.class, "rightFront");//exp 0
-        rightBack = hardwareMap.get(DcMotor.class, "rightBack");//exp 1
-        hanging = hardwareMap.get(DcMotor.class, "hanging");// exp 3
-        drone = hardwareMap.get(Servo.class, "drone");//exp 4
-        outtake_servo = hardwareMap.get(Servo.class, "outtake_servo");//exp 4
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");// ctrl 0
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");// ctrl 1
+        rightFront = hardwareMap.get(DcMotor.class, "rightFront");// ctrl 2
+        rightBack = hardwareMap.get(DcMotor.class, "rightBack");// ctrl 3
+        hanging = hardwareMap.get(DcMotor.class, "hanging");// exp 0
+        //drone = hardwareMap.get(Servo.class, "drone");// exp 1
+        //outtake_servo = hardwareMap.get(Servo.class, "outtake_servo");// exp 2
 
         //components not being used for LM2:
         //hanging_servo = hardwareMap.get(Servo.class, "hanging_servo");//exp 2
@@ -100,94 +108,47 @@ public class Final_TeleOp extends OpMode {
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
 
-        telemetry.addData("Say", "Hello Driver");    //
-    }
 
-
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
+        telemetry.addData("Say", "Hello Driver");
     }
     @Override
     public void loop() {
-        /* gamepad 1 start ------------------------------------------------*/
+        leftFrontSpeed = gamepad1.left_stick_y + gamepad1.left_trigger - gamepad1.right_trigger;
+        leftRearSpeed = gamepad1.left_stick_y - gamepad1.left_trigger + gamepad1.right_trigger;
+        rightRearSpeed = gamepad1.right_stick_y + gamepad1.left_trigger - gamepad1.right_trigger;
+        rightFrontSpeed = gamepad1.right_stick_y - gamepad1.left_trigger + gamepad1.right_trigger;
 
-        telemetry.log().add("loop enter");
+        if (leftFrontSpeed > 1)
+            leftFrontSpeed = 1;
+        if (leftFrontSpeed < -1)
+            leftFrontSpeed = -1;
+        if (rightFrontSpeed > 1)
+            rightFrontSpeed = 1;
+        if (rightFrontSpeed < -1)
+            rightFrontSpeed = -1;
+        if (leftRearSpeed > 1)
+            leftRearSpeed = 1;
+        if (leftRearSpeed < -1)
+            leftRearSpeed = -1;
+        if (rightRearSpeed > 1)
+            rightRearSpeed = 1;
+        if (rightRearSpeed < -1)
+            rightRearSpeed = -1;
 
-        //forward backward controls
-        leftFront.setPower(gamepad1.left_stick_y);
-        leftBack.setPower(gamepad1.left_stick_y);
-        rightFront.setPower(gamepad1.right_stick_y);
-        rightBack.setPower(gamepad1.right_stick_y);
+        leftFront.setPower(leftFrontSpeed);
+        rightFront.setPower(rightFrontSpeed);
+        leftBack.setPower(leftRearSpeed);
+        rightBack.setPower(rightRearSpeed);
 
-        //turning controls
-        if (gamepad1.dpad_right) {
-            leftFront.setPower(turnSpeed);
-            rightFront.setPower(-turnSpeed);
-            leftBack.setPower(turnSpeed);
-            rightBack.setPower(-turnSpeed);
-        } else if (gamepad1.dpad_left) {
-            leftFront.setPower(-turnSpeed);
-            rightFront.setPower(turnSpeed);
-            leftBack.setPower(-turnSpeed);
-            rightBack.setPower(turnSpeed);
-        } else {
-            leftFront.setPower(0);
-            rightFront.setPower(0);
-            leftBack.setPower(0);
-            rightBack.setPower(0);
-        }
 
-        //strafing controls
-
-            //strafing right
-        if (gamepad1.left_bumper) {
-            leftFront.setPower(-1);
-            leftBack.setPower(1);
-            rightFront.setPower(1);
-            rightBack.setPower(-1);
-        }
-
-        //strafing left
-        if (gamepad1.left_bumper) {
-            leftFront.setPower(1);
-            leftBack.setPower(-1);
-            rightFront.setPower(-1);
-            rightBack.setPower(1);
-        }
-
-        /* gamepad 2 start -----------------------------------------------*/
-
-        //drone launcher
-        if (gamepad2.y) {
-            telemetry.log().add("drone launched");
-            drone.setPosition(0);
-        } else if (gamepad2.x) {
-            drone.setPosition(.4);
-        }
-
-        //hanging
-        if(gamepad2.x) {
+        if(gamepad2.dpad_up) {
             hanging.setPower(1);
-            telemetry.log().add("hanging activated");
         }
 
-        //outtake
-        if(gamepad1.a){
-            outtake_servo.setPosition(1);
-        } else if (gamepad2.b) {
-            outtake_servo.setPosition(0);
+        if(gamepad2.dpad_down){
+            hanging.setPower(-1);
+
         }
     }
 }
+
