@@ -48,7 +48,7 @@ public class Final_TeleOp extends OpMode {
     //public DcMotor outtake_extension = null;
     //public DcMotor intake = null;
 
-    public DcMotor hanging = null;
+
     //public DcMotor hanging2 = null;
     public Servo drone = null;
 
@@ -89,7 +89,7 @@ public class Final_TeleOp extends OpMode {
         leftBack = hardwareMap.get(DcMotor.class, "leftBack");// ctrl 1
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");// ctrl 2
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");// ctrl 3
-        hanging = hardwareMap.get(DcMotor.class, "hanging");// exp 0
+
         //drone = hardwareMap.get(Servo.class, "drone");// exp 1
         //outtake_servo = hardwareMap.get(Servo.class, "outtake_servo");// exp 2
 
@@ -102,10 +102,9 @@ public class Final_TeleOp extends OpMode {
         //outtake_extension = hardwareMap.get(DcMotor.class, "outtake_extension");//exp 3
         //hanging2 = hardwareMap.get(DcMotor.class, "hanging_2");//ctrl 3
 
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftBack.setDirection(DcMotor.Direction.FORWARD);
+
         rightFront.setDirection(DcMotor.Direction.REVERSE);
-        rightBack.setDirection(DcMotor.Direction.FORWARD);
+
 
 
 
@@ -141,14 +140,6 @@ public class Final_TeleOp extends OpMode {
         rightBack.setPower(rightRearSpeed);
 
 
-        if(gamepad2.dpad_up) {
-            hanging.setPower(1);
-        }
-
-        if(gamepad2.dpad_down){
-            hanging.setPower(-1);
-
-        }
     }
 }
 
