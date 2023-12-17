@@ -12,12 +12,12 @@ org.firstinspires.ftc.teamcode.TeamCode-jetified-RobotCore-8.2.0-10 /Users/avika
 org.firstinspires.ftc.teamcode.TeamCode-appcompat-1.2.0-11 /Users/avikaprasad/.gradle/caches/transforms-3/c6f9a08362f0b2ebd1f0ffa501e6b073/transformed/appcompat-1.2.0/res
 org.firstinspires.ftc.teamcode.TeamCode-jetified-Inspection-8.2.0-12 /Users/avikaprasad/.gradle/caches/transforms-3/c7a9f1cc42f68e6d47997e7e92a415e4/transformed/jetified-Inspection-8.2.0/res
 org.firstinspires.ftc.teamcode.TeamCode-jetified-RobotServer-8.2.0-13 /Users/avikaprasad/.gradle/caches/transforms-3/e794e3fa837eee81673e4134ecde3d0a/transformed/jetified-RobotServer-8.2.0/res
-org.firstinspires.ftc.teamcode.TeamCode-packaged_res-14 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/FtcRobotController/build/intermediates/packaged_res/debug
-org.firstinspires.ftc.teamcode.TeamCode-pngs-15 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/build/generated/res/pngs/debug
-org.firstinspires.ftc.teamcode.TeamCode-resValues-16 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/build/generated/res/resValues/debug
-org.firstinspires.ftc.teamcode.TeamCode-rs-17 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/build/generated/res/rs/debug
-org.firstinspires.ftc.teamcode.TeamCode-mergeDebugResources-18 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
-org.firstinspires.ftc.teamcode.TeamCode-mergeDebugResources-19 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
-org.firstinspires.ftc.teamcode.TeamCode-merged_res-20 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/build/intermediates/merged_res/debug
-org.firstinspires.ftc.teamcode.TeamCode-debug-21 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/src/debug/res
-org.firstinspires.ftc.teamcode.TeamCode-main-22 /Users/avikaprasad/Desktop/FTC Centerstage 2023-2024 Current/TeamCode/src/main/res
+org.firstinspires.ftc.teamcode.TeamCode-packaged_res-14 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/FtcRobotController/build/intermediates/packaged_res/debug
+org.firstinspires.ftc.teamcode.TeamCode-pngs-15 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/build/generated/res/pngs/debug
+org.firstinspires.ftc.teamcode.TeamCode-resValues-16 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/build/generated/res/resValues/debug
+org.firstinspires.ftc.teamcode.TeamCode-rs-17 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/build/generated/res/rs/debug
+org.firstinspires.ftc.teamcode.TeamCode-mergeDebugResources-18 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+org.firstinspires.ftc.teamcode.TeamCode-mergeDebugResources-19 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+org.firstinspires.ftc.teamcode.TeamCode-merged_res-20 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/build/intermediates/merged_res/debug
+org.firstinspires.ftc.teamcode.TeamCode-debug-21 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/src/debug/res
+org.firstinspires.ftc.teamcode.TeamCode-main-22 /Users/avikaprasad/Documents/GitHub/FTC-2023-2024/TeamCode/src/main/res
