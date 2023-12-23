@@ -190,8 +190,8 @@ public class CV_RedShort extends LinearOpMode
         boolean viewportPaused;
 
         //Defining a rectangle example: Rect exampleRect = new Rect ( x starting location, y starting location, width, height)
-        Rect rightRect = new Rect (230,80,45, 45);
-        Rect centerRect = new Rect (90, 80, 45, 45);
+        Rect rightRect = new Rect (260,60,45, 45);
+        Rect centerRect = new Rect (110, 60, 45, 45);
 
         // creating a variable to store the color of the rectangle
         Scalar rectColor = new Scalar (0.0, 0.0, 255.0);

@@ -190,8 +190,8 @@ public class CV_BlueShort extends LinearOpMode
         boolean viewportPaused;
 
         //Defining a rectangle example: Rect exampleRect = new Rect ( x starting location, y starting location, width, height)
-        Rect centerRect = new Rect (190,110,45, 45);
-        Rect leftRect = new Rect (45, 120, 45, 45);
+        Rect centerRect = new Rect (225,120,45, 45);
+        Rect leftRect = new Rect (70, 120, 45, 45);
 
         // creating a variable to store the color of the rectangle
         Scalar rectColor = new Scalar (0.0, 0.0, 255.0);
@@ -240,7 +240,7 @@ public class CV_BlueShort extends LinearOpMode
             // 0 = red, 1 = green, 2 = blue
 
             // the value at which we say, neither pixel region is red (must be on the left)
-            double threshold = 30.0;
+            double threshold = 150.0;
 
             if(centerAvg > leftAvg && centerAvg >= threshold){
                 telemetry.addLine("Prop Location: Center");

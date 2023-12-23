@@ -154,7 +154,7 @@ public class LM2_BlueShort extends LinearOpMode
             telemetry.update();
 
             if (pixelLocation == CENTER) {
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(new Pose2d()) // for red short
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(new Pose2d()) // for blue short
                         .forward(33.5)
                         .waitSeconds(0.5)
                         .back(5)
@@ -252,8 +252,8 @@ public class LM2_BlueShort extends LinearOpMode
         boolean viewportPaused;
 
         //Defining a rectangle example: Rect exampleRect = new Rect ( x starting location, y starting location, width, height)
-        Rect centerRect = new Rect (190,110,45, 45);
-        Rect leftRect = new Rect (45, 120, 45, 45);
+        Rect centerRect = new Rect (225,120,45, 45);
+        Rect leftRect = new Rect (70, 120, 45, 45);
 
         // creating a variable to store the color of the rectangle
         Scalar rectColor = new Scalar (0.0, 0.0, 255.0);

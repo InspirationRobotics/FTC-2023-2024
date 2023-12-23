@@ -155,11 +155,11 @@ public class LM2_RedShort extends LinearOpMode
 
             if (pixelLocation == CENTER) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(new Pose2d()) // for red short
-                        .forward(33.5)
+                        .forward(32)
                         .waitSeconds(0.5)
                         .back(5)
                         .waitSeconds(.5)
-                        .lineToLinearHeading(new Pose2d(38, -43, Math.toRadians(94)))
+                        .lineToLinearHeading(new Pose2d(38, -44, Math.toRadians(94)))
                         .waitSeconds(0.5)
                         .build();
                 drive.followTrajectorySequence(trajSeq);
@@ -168,7 +168,12 @@ public class LM2_RedShort extends LinearOpMode
                 sleep(1000);
                 trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(2)
-                        .strafeLeft(24)
+                        .strafeLeft(30)
+                        .build();
+                drive.followTrajectorySequence(trajSeq);
+                flipper.setPosition(0.8);
+                trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(12)
                         .build();
                 drive.followTrajectorySequence(trajSeq);
                 flipper.setPosition(0.8);
@@ -187,7 +192,12 @@ public class LM2_RedShort extends LinearOpMode
                 sleep(1000);
                 trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(2)
-                        .strafeLeft(18)
+                        .strafeLeft(25)
+                        .build();
+                drive.followTrajectorySequence(trajSeq);
+                flipper.setPosition(0.8);
+                trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(12)
                         .build();
                 drive.followTrajectorySequence(trajSeq);
                 flipper.setPosition(0.8);
@@ -204,8 +214,8 @@ public class LM2_RedShort extends LinearOpMode
                 trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(8)
                         .waitSeconds(0.5)
-                        .back(44)
-                        .strafeRight(7)
+                        .back(45)
+                        .strafeRight(6)
                         .build();
                 drive.followTrajectorySequence(trajSeq);
                 flipper.setPosition(0.4);
@@ -213,13 +223,19 @@ public class LM2_RedShort extends LinearOpMode
                 sleep(1000);
                 trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(2)
-                        .strafeLeft(24)
+                        .strafeLeft(30)
+                        .build();
+                drive.followTrajectorySequence(trajSeq);
+                flipper.setPosition(0.8);
+                trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(12)
                         .build();
                 drive.followTrajectorySequence(trajSeq);
                 flipper.setPosition(0.8);
                 break;
 
             }
+
 
 
 
@@ -252,8 +268,8 @@ public class LM2_RedShort extends LinearOpMode
         boolean viewportPaused;
 
         //Defining a rectangle example: Rect exampleRect = new Rect ( x starting location, y starting location, width, height)
-        Rect rightRect = new Rect (230,80,45, 45);
-        Rect centerRect = new Rect (90, 80, 45, 45);
+        Rect rightRect = new Rect (260,60,45, 45);
+        Rect centerRect = new Rect (110, 60, 45, 45);
 
         // creating a variable to store the color of the rectangle
         Scalar rectColor = new Scalar (0.0, 0.0, 255.0);
