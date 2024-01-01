@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -36,32 +36,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@TeleOp(name="TeleOp_Advik", group="Pushbot")
-public class teleop extends OpMode {
+@TeleOp(name="Drone Testing", group="Pushbot")
+public class Drone_Testing extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor leftFront = null;
-    public DcMotor leftBack = null;
-    public DcMotor rightFront = null;
-    public DcMotor rightBack = null;
-    /* public DcMotor intake = null; */
-
-
-    public static final double turnSpeed = 0.4;
-
+    public Servo Drone = null;
 
     public void init() {
 
-        leftFront = hardwareMap.dcMotor.get("leftFront");
-        leftBack = hardwareMap.dcMotor.get("leftBack");
-        rightFront = hardwareMap.dcMotor.get("rightFront");
-        rightBack = hardwareMap.dcMotor.get("rightBack");
-        Intake = hardwareMap.dcMotor.get("Intake");
-
-        leftFront.setDirection(DcMotor.Direction.FORWARD);
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
-        rightBack.setDirection(DcMotor.Direction.FORWARD);
+        Drone = hardwareMap.servo.get("drone");
 
 
         telemetry.addData("Say", "Hello Driver");    //
@@ -84,30 +67,9 @@ public class teleop extends OpMode {
     @Override
     public void loop() {
         /* gamepad 1 start ------------------------------------------------*/
-        leftFront.setPower(gamepad1.left_stick_y);
-        rightFront.setPower(gamepad1.right_stick_y);
-        leftBack.setPower(gamepad1.right_stick_y);
-        rightBack.setPower(gamepad1.left_stick_y);
-        telemetry.log().add("loop enter");
-
-
-        if (gamepad1.right_bumper) {
-            leftFront.setPower(turnSpeed);
-            rightFront.setPower(-turnSpeed);
-            leftBack.setPower(turnSpeed);
-            rightBack.setPower(-turnSpeed);
-        }
-        else if (gamepad1.left_bumper) {
-            leftFront.setPower(-turnSpeed);
-            rightFront.setPower(turnSpeed);
-            leftBack.setPower(-turnSpeed);
-            rightBack.setPower(turnSpeed);
-        }
-        else {
-            leftFront.setPower(0);
-            rightFront.setPower(0);
-            leftBack.setPower(0);
-            rightBack.setPower(0);
+        if (gamepad1.x) {
+            telemetry.log().add("button x pressed");
+            Drone.setPosition(0.7);
         }
     }
 }

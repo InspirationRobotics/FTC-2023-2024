@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -36,16 +35,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@TeleOp(name="IntakeTesting", group="Pushbot")
-public class teleop extends OpMode {
+@TeleOp(name="Slides Testing", group="Pushbot")
+public class Slides_Testing extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor intake = null;
-
+    public DcMotor outtake_extension = null;
 
     public void init() {
 
-        intake = hardwareMap.dcMotor.get("intake");
+        outtake_extension = hardwareMap.dcMotor.get("outtake_extension");
+
+
         telemetry.addData("Say", "Hello Driver");    //
     }
 
@@ -65,24 +65,17 @@ public class teleop extends OpMode {
 
     @Override
     public void loop() {
-        /* gamepad 1 start ------------------------------------------------*/
-        intake.setPower(gamepad1.left_stick_y);
-
-
-        if (gamepad1.right_bumper) {
-            intake.setPower(0.2);
+        /* gamepad 2 start ------------------------------------------------*/
+        while (gamepad2.x) {
+            telemetry.log().add("button x pressed");
+            outtake_extension.setPower(0.5);
         }
-        else if (gamepad1.left_bumper) {
-            intake.setPower(0.4);
-        } else if (gamepad1.y) {
-            intake.setPower(0.6)
-        } else if (gamepad1.x) {
-            intake.setPower(0.8)
-        } else if (gamepad1.a) {
-            intake.setPower(1.0)
-        } else {
-            intake.setPower(0.0)
+        while (gamepad1.a){
+            outtake_extension.setPower(-0.5);
         }
+        outtake_extension.setPower(0);
     }
 
 }
+
+

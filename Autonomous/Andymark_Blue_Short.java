@@ -30,14 +30,9 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.TimedMecanumDrive;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -58,9 +53,9 @@ import org.firstinspires.ftc.teamcode.TimedMecanumDrive;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonomous!", group="Robot")
+@Autonomous(name="Andymark_Blue_Short", group="Robot")
 
-public class auto extends LinearOpMode  {
+public class Andymark_Blue_Short extends LinearOpMode {
 
     /* Declare OpMode members. */
     //motors
@@ -69,28 +64,80 @@ public class auto extends LinearOpMode  {
     public DcMotor rightFront = null;
     public DcMotor rightBack = null;
 
-    private ElapsedTime     runtime = new ElapsedTime();
+
+    private ElapsedTime runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = 0.4;
-    static final double     TURN_SPEED    = 0.4;
+    static final double FORWARD_SPEED = 0.4;
+    static final double TURN_SPEED = 0.4;
+    static final double STRAFE_SPEED = 0.6;
+
+
+    public void MoveForward(){
+        rightFront.setPower(FORWARD_SPEED);
+        leftFront.setPower(FORWARD_SPEED);
+        leftBack.setPower(FORWARD_SPEED);
+        rightBack.setPower(FORWARD_SPEED);
+        runtime.reset();
+    }
+    public void MoveBackward(){
+        rightFront.setPower(-FORWARD_SPEED);
+        leftFront.setPower(-FORWARD_SPEED);
+        leftBack.setPower(-FORWARD_SPEED);
+        rightBack.setPower(-FORWARD_SPEED);
+        runtime.reset();
+    }
+
+    public void TurnRight() {
+        rightFront.setPower(-TURN_SPEED);
+        leftFront.setPower(TURN_SPEED);
+        leftBack.setPower(TURN_SPEED);
+        rightBack.setPower(-TURN_SPEED);
+        runtime.reset();
+
+    }
+
+    public void TurnLeft() {
+        rightFront.setPower(TURN_SPEED);
+        leftFront.setPower(-TURN_SPEED);
+        leftBack.setPower(-TURN_SPEED);
+        rightBack.setPower(TURN_SPEED);
+        runtime.reset();
+
+    }
+    public void StrafeRight(){
+        rightFront.setPower(-STRAFE_SPEED);
+        leftFront.setPower(STRAFE_SPEED);
+        rightBack.setPower(STRAFE_SPEED);
+        leftBack.setPower(-STRAFE_SPEED);
+        runtime.reset();
+    }
+    public void StrafeLeft(){
+        rightFront.setPower(STRAFE_SPEED);
+        leftFront.setPower(-STRAFE_SPEED);
+        leftBack.setPower(STRAFE_SPEED);
+        rightBack.setPower(-STRAFE_SPEED);
+        runtime.reset();
+    }
+
 
     @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFront.setDirection(DcMotor.Direction.FORWARD);
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
 
 
         // Send telemetry message to signify robot waiting;
@@ -100,47 +147,29 @@ public class auto extends LinearOpMode  {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        move(1.0, 0.4);
-        move(-1.0, 0.4);
-        turn(1.1, 0.4);
-        turn(-1.1, 0.4);
-        strafe(1.0, 0.4);
-        strafe(-1.0, 0.4);
-    }
+        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-    public void move(double time, double speed) {
-        leftFront.setPower(speed);
-        leftBack.setPower(speed);
-        rightFront.setPower(speed);
-        rightBack.setPower(speed);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < time)) {
-            telemetry.addData("Moved for:", runtime.seconds());
+        // Step 1:  Forward
+        MoveForward();
+        while (opModeIsActive() && (runtime.seconds() < .1)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-    }
 
-    public void strafe(double time, double speed) {
-        leftFront.setPower(-speed);
-        leftBack.setPower(speed);
-        rightFront.setPower(speed);
-        rightBack.setPower(-speed);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < time)) {
-            telemetry.addData("Strafed for:", runtime.seconds());
+        StrafeLeft();
+        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+
+        // Step 2: Stop motion
+        leftFront.setPower(0);
+        leftBack.setPower(0);
+        rightFront.setPower(0);
+        rightBack.setPower(0);
+        telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
+        telemetry.update();
     }
 
-    public void turn(double time, double speed) {
-        leftFront.setPower(-speed);
-        leftBack.setPower(-speed);
-        rightFront.setPower(speed);
-        rightBack.setPower(speed);r
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < time)) {
-            telemetry.addData("Turned for:", runtime.seconds());
-            telemetry.update();
-        }
-    }
 }
+

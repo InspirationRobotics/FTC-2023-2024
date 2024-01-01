@@ -53,9 +53,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Parking_Blue_Short", group="Robot")
+@Autonomous(name="Andymark_Blue_Long", group="Robot")
 
-public class Parking_Blue_Short extends LinearOpMode {
+public class Andymark_Blue_Long extends LinearOpMode {
 
     /* Declare OpMode members. */
     //motors
@@ -73,53 +73,71 @@ public class Parking_Blue_Short extends LinearOpMode {
     static final double STRAFE_SPEED = 0.6;
 
 
-    public void TurnRight() {
-        leftFront.setPower(TURN_SPEED);
-        leftBack.setPower(TURN_SPEED);
-        rightFront.setPower(-TURN_SPEED);
-        rightBack.setPower(-TURN_SPEED);
-        runtime.reset();
-    }
-
     public void MoveForward(){
+        rightFront.setPower(FORWARD_SPEED);
         leftFront.setPower(FORWARD_SPEED);
         leftBack.setPower(FORWARD_SPEED);
-        rightFront.setPower(FORWARD_SPEED);
         rightBack.setPower(FORWARD_SPEED);
         runtime.reset();
     }
+    public void MoveBackward(){
+        rightFront.setPower(-FORWARD_SPEED);
+        leftFront.setPower(-FORWARD_SPEED);
+        leftBack.setPower(-FORWARD_SPEED);
+        rightBack.setPower(-FORWARD_SPEED);
+        runtime.reset();
+    }
 
+    public void TurnRight() {
+        rightFront.setPower(-TURN_SPEED);
+        leftFront.setPower(TURN_SPEED);
+        leftBack.setPower(TURN_SPEED);
+        rightBack.setPower(-TURN_SPEED);
+        runtime.reset();
+
+    }
+
+    public void TurnLeft() {
+        rightFront.setPower(TURN_SPEED);
+        leftFront.setPower(-TURN_SPEED);
+        leftBack.setPower(-TURN_SPEED);
+        rightBack.setPower(TURN_SPEED);
+        runtime.reset();
+
+    }
+    public void StrafeRight(){
+        rightFront.setPower(-STRAFE_SPEED);
+        leftFront.setPower(STRAFE_SPEED);
+        rightBack.setPower(STRAFE_SPEED);
+        leftBack.setPower(-STRAFE_SPEED);
+        runtime.reset();
+    }
     public void StrafeLeft(){
-        leftFront.setPower(-STRAFE_SPEED);
         rightFront.setPower(STRAFE_SPEED);
+        leftFront.setPower(-STRAFE_SPEED);
         leftBack.setPower(STRAFE_SPEED);
         rightBack.setPower(-STRAFE_SPEED);
         runtime.reset();
     }
 
-    public void StrafeRight(){
-        leftFront.setPower(STRAFE_SPEED);
-        rightFront.setPower(-STRAFE_SPEED);
-        leftBack.setPower(-STRAFE_SPEED);
-        rightBack.setPower(STRAFE_SPEED);
-        runtime.reset();
-    }
+
     @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftFront.setDirection(DcMotor.Direction.FORWARD);
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
 
 
         // Send telemetry message to signify robot waiting;
@@ -131,9 +149,32 @@ public class Parking_Blue_Short extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Strafe For 3 Seconds
+        // Step 1:  Forward
+        MoveForward();
+        while (opModeIsActive() && (runtime.seconds() < .05)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+        TurnRight();
+        while (opModeIsActive() && (runtime.seconds() < .02)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
         StrafeLeft();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 2.75)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+        MoveBackward();
+        while (opModeIsActive() && (runtime.seconds() < .2)) {
+            telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        StrafeLeft();
+        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -147,3 +188,4 @@ public class Parking_Blue_Short extends LinearOpMode {
     }
 
 }
+

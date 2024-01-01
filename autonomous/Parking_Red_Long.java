@@ -30,14 +30,9 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.TimedMecanumDrive;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -74,7 +69,7 @@ public class Parking_Red_Long extends LinearOpMode {
 
 
     static final double FORWARD_SPEED = 0.4;
-    static final double TURN_SPEED = 0.4;
+    static final double TURN_SPEED = 0.3;
     static final double STRAFE_SPEED = 0.4;
 
 
@@ -87,20 +82,20 @@ public class Parking_Red_Long extends LinearOpMode {
     }
 
     public void MoveForward(){
-            leftFront.setPower(FORWARD_SPEED);
+        leftFront.setPower(FORWARD_SPEED);
         leftBack.setPower(FORWARD_SPEED);
         rightFront.setPower(FORWARD_SPEED);
         rightBack.setPower(FORWARD_SPEED);
         runtime.reset();
-        }
+    }
 
-        public void StrafeLeft(){
-            leftFront.setPower(-STRAFE_SPEED);
-            rightFront.setPower(STRAFE_SPEED);
-            leftBack.setPower(STRAFE_SPEED);
-            rightBack.setPower(-STRAFE_SPEED);
-            runtime.reset();
-        }
+    public void StrafeLeft(){
+        leftFront.setPower(-STRAFE_SPEED);
+        rightFront.setPower(STRAFE_SPEED);
+        leftBack.setPower(STRAFE_SPEED);
+        rightBack.setPower(-STRAFE_SPEED);
+        runtime.reset();
+    }
 
     public void StrafeRight(){
         leftFront.setPower(STRAFE_SPEED);
@@ -123,8 +118,8 @@ public class Parking_Red_Long extends LinearOpMode {
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
-        rightBack.setDirection(DcMotor.Direction.FORWARD);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        rightBack.setDirection(DcMotor.Direction.REVERSE);
 
 
         // Send telemetry message to signify robot waiting;
@@ -143,8 +138,8 @@ public class Parking_Red_Long extends LinearOpMode {
             telemetry.update();
         }
         // Step 2:  Spin right for 1.2 seconds
-         TurnRight();
-        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
+        TurnRight();
+        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -154,20 +149,20 @@ public class Parking_Red_Long extends LinearOpMode {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-         //Step 4: Strafe right for 1.0 seconds
+        //Step 4: Strafe right for 1.0 seconds
         StrafeRight();
         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-            // Step 5: Stop motion
-            leftFront.setPower(0);
-            leftBack.setPower(0);
-            rightFront.setPower(0);
-            rightBack.setPower(0);
-            telemetry.addData("Path", "Leg 6: %4.1f S Elapsed", runtime.seconds());
-            telemetry.update();
+        // Step 5: Stop motion
+        leftFront.setPower(0);
+        leftBack.setPower(0);
+        rightFront.setPower(0);
+        rightBack.setPower(0);
+        telemetry.addData("Path", "Leg 6: %4.1f S Elapsed", runtime.seconds());
+        telemetry.update();
 
     }
 
