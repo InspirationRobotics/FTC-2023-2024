@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="Gradle: org.firstinspires.ftc:RobotCore:8.2.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/jars/libs/Vuforia.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/jars/libs/gson-2.8.0.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/jars/libs/gson-extras-0.2.1.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/jars/libs/slf4j-api-1.7.26.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/jars/libs/slf4j-handroid-1.7.27.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bce2579be075a9e46879aded32003bb5/transformed/jetified-RobotCore-8.2.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.firstinspires.ftc/RobotCore/8.2.0/53d982ff4be1b63d3529c4ae7d001f8fcb7c5dd5/RobotCore-8.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.firstinspires.ftc/RobotCore/8.2.0/adf1fb03b6ed75fc21645b8251235112d7c6bdb4/RobotCore-8.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
