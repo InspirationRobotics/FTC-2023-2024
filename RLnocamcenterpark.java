@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -62,17 +62,17 @@ public class RLnocamcenterpark extends LinearOpMode {
         wristMotor.setPower(0.3);
         trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                 .waitSeconds(2)
-               .strafeRight(100)
+                .strafeRight(100)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         //armMotor.setTargetPosition(1900);
-       // armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       // armMotor.setPower(0.3);
+        // armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // armMotor.setPower(0.3);
         //trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-              //  .back(8)
-              //  .waitSeconds(5)
-              //  .build();
+        //  .back(8)
+        //  .waitSeconds(5)
+        //  .build();
         //drive.followTrajectorySequence(trajSeq);
         if(isStopRequested()) return;
     }
-    }
+}

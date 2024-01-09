@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,7 +10,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous
-public class RLnocamleftpark extends LinearOpMode {
+public class BLnocamcenterpark extends LinearOpMode {
     //RIGHT
 
     public Servo clawLeft = null;
@@ -26,6 +25,8 @@ public class RLnocamleftpark extends LinearOpMode {
     int armUpPosition = 1900;
     // Position of the arm when it's down (ticks)
     int armDownPosition = 0;
+    int totalDistance = 100;
+    int subtractedDistance = 36;
 
 
 
@@ -48,14 +49,13 @@ public class RLnocamleftpark extends LinearOpMode {
         wristMotor.setPower(0.3);
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(new Pose2d()) // for red long - center spike mark
                 .waitSeconds(3)
-                .forward(25)
-                .strafeLeft(8)
+                .forward(28)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         clawLeft.setPosition(0.3);
         trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                 .waitSeconds(2)
-                .back(22)
+                .back(24)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         clawLeft.setPosition(0);
@@ -64,7 +64,10 @@ public class RLnocamleftpark extends LinearOpMode {
         wristMotor.setPower(0.3);
         trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                 .waitSeconds(2)
-                .strafeRight(101)
+                //Long Side
+                .strafeLeft(totalDistance)
+                //Short Side
+//                .strafeRight(totalDistance - subtractedDistance)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         //armMotor.setTargetPosition(1900);

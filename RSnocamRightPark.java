@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous
-public class RLnocamleftpark extends LinearOpMode {
+public class RSnocamRightPark extends LinearOpMode {
     //RIGHT
 
     public Servo clawLeft = null;
@@ -48,14 +48,18 @@ public class RLnocamleftpark extends LinearOpMode {
         wristMotor.setPower(0.3);
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(new Pose2d()) // for red long - center spike mark
                 .waitSeconds(3)
-                .forward(25)
-                .strafeLeft(8)
+                .forward(28)
+                .turn(Math.toRadians(-92))
+                .back(4)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         clawLeft.setPosition(0.3);
         trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                 .waitSeconds(2)
-                .back(22)
+                .back(5)
+                .turn(Math.toRadians(90))
+                .strafeRight(5)
+                .back(26)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         clawLeft.setPosition(0);
@@ -64,7 +68,7 @@ public class RLnocamleftpark extends LinearOpMode {
         wristMotor.setPower(0.3);
         trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                 .waitSeconds(2)
-                .strafeRight(101)
+                .strafeRight(50)
                 .build();
         drive.followTrajectorySequence(trajSeq);
         //armMotor.setTargetPosition(1900);
